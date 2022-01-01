@@ -21,10 +21,25 @@ The generated .csv file are called L3 level data products with fields height, U,
 #### Credits
 
 The starter electron+angluar bootstrap is taken from [here](https://github.com/maximegris/angular-electron). Thanks to [maximegris](https://github.com/maximegris) for his wonderful work in bootstrap.
+<br>
+<br>
+<br>
+<br>
 
-### If you are a developer nodejs developer, you can scroll futher. :)
+> _**If you are a python/nodejs developer, you can scroll futher.**_ :)
 
 ### Getting Started
+
+#### setting python environment
+make sure virtualenv is installed to generate python environment folder `venv` and install python `numpy` module.
+
+```sh
+$ virtualenv ./app/lib/venv
+$ activate
+(venv)$ pip install numpy
+```
+
+#### setting node environment
 
 *Clone this repository locally:*
 
