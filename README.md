@@ -1,27 +1,35 @@
 
 ## mmt to csv converter
+_powered by electron, angular, nodejs, typescript_
 
 ### Introduction
 
 mmt to csv converter desktop application made using electron, Angular, Nodejs
 
 **what are moment or .mmt file ?**
-moments files is a binary file format used for transport/storing of radar generated gaussian moments in an electronic form.
+
+moments file is a binary file format used for transport/storing radar generated gaussian moments in an electronic form. It is L2 level data with necessary information to derive parameters.
 
 **How this app helps you in saving a lot of coding time**
 
-moment files or .mmt files are L2 level data products which must undergo further computation processing to derive necessary U, V, W, Direction data products which have great value in scientific groups. previously the researcher/scientific groups would invest time in uderstanding the format and implement code to convert these .mmt file.
+moments file or .mmt file are L2 level data products which must undergo further computation processing to derive necessary U, V, W, Direction data products which have great value for scientific research. Previously researcher/scientific groups would invest professional time in uderstanding the format and implement code to read these .mmt files.
 
-This application will take the load of transforming .mmt files to standard scientific friendly .csv files, which the scientific group can analyse using tools and languages of their own interest.
+This application will help you in transforming .mmt files to standard scientific friendly .csv files, which the reasercher can analyse output using tools and languages of their own interest.
 
 The generated .csv file are called L3 level data products with fields height, U, V, W, Direction, Zenith SNR, Zenith doppler.
+
+#### Credits
+
+The starter electron+angluar bootstrap is taken from [here](https://github.com/maximegris/angular-electron). Thanks to [maximegris](https://github.com/maximegris) for his wonderful work in bootstrap.
+
+### If you are a developer nodejs developer, you can scroll futher. :)
 
 ### Getting Started
 
 *Clone this repository locally:*
 
 ``` bash
-git clone https://github.com/maximegris/angular-electron.git
+git clone https://github.com/jeldikk/mmt-csv-converter.git
 ```
 
 *Install dependencies with npm (used by Electron renderer process):*
@@ -48,7 +56,7 @@ npm install
 
 Why two package.json ? This project follow [Electron Builder two package.json structure](https://www.electron.build/tutorials/two-package-structure) in order to optimize final bundle and be still able to use Angular `ng add` feature.
 
-### To build for development
+#### To build for development
 
 - **in a terminal window** -> npm start
 
@@ -97,7 +105,3 @@ E2E Test scripts can be found in `e2e` folder.
 
 Note: To make it work behind a proxy, you can add this proxy exception in your terminal  
 `export {no_proxy,NO_PROXY}="127.0.0.1,localhost"`
-
-### Credits
-
-The starter electron+angluar bootstrap is taken from [here](https://github.com/maximegris/angular-electron). Thanks to [maximegris](https://github.com/maximegris) for his wonderful work in bootstrap.
