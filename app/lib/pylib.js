@@ -88,11 +88,10 @@ function convertMmtFile(ifilename, ofolder) {
                         }
                     });
                     pythonShell.on("message", function (chunk) {
-                        console.log({ chunk: chunk });
                         resolve(chunk);
                     });
                     pythonShell.on("close", function () {
-                        console.log("creating pythonShell finished");
+                        console.log("convert pythonShell finished");
                     });
                 })];
         });

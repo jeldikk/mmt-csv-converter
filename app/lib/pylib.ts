@@ -47,12 +47,11 @@ export async function convertMmtFile(ifilename, ofolder) {
     });
 
     pythonShell.on("message", (chunk) => {
-      console.log({ chunk });
       resolve(chunk);
     });
 
     pythonShell.on("close", () => {
-      console.log("creating pythonShell finished");
+      console.log("convert pythonShell finished");
     });
   });
 }

@@ -5,11 +5,11 @@ import { ElectronService } from "../core/services";
 import { LoadingService } from "./loading.service";
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  selector: "app-single-mmt",
+  templateUrl: "./single-mmt.component.html",
+  styleUrls: ["./single-mmt.component.scss"],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class SingleMmtComponent implements OnInit, OnDestroy {
   inputForm: FormGroup;
 
   validationError = false;
