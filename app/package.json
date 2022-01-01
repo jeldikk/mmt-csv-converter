@@ -1,0 +1,10 @@
+{
+  "name": "angular-electron",
+  "version": "10.4.1",
+  "main": "main.js",
+  "private": true,
+  "dependencies": {
+    "@types/python-shell": "^1.0.3",
+    "python-shell": "^3.0.1"
+  }
+}

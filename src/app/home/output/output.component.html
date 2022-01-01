@@ -1,0 +1,40 @@
+<div class="output">
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            Result
+        </div>
+        <div class="card-body">
+            <div *ngIf="loading; else contentTemplate">
+                <div class="d-flex justify-content-center align-item-center">
+                    <div class="spinner-border" [style]="{width: '3rem', height: '3rem'}" role="status">
+                        <span class="visually-hidden"></span>
+                    </div>
+                </div>
+            </div>
+            <ng-template #contentTemplate>
+                <div [ngSwitch]="type">
+                    <app-error *ngSwitchCase="'error'" [message]="data"></app-error>
+                    <app-info *ngSwitchCase="'info'" [message]="data"></app-info>
+                    <app-success *ngSwitchCase="'success'" [message]="data"></app-success>
+                    <div *ngSwitchDefault>
+                        <ol class="list-group">
+                            <p class="font-weight-bold">How to use</p>
+                            <li class="list-group-item">
+                                Choose moment file of interest by clicking Browse button
+                            </li>
+                            <li class="list-group-item">
+                                Validate to see if moment file suitable for convertion
+                            </li>
+                            <li class="list-group-item">
+                                Choose output folder where do you want .csv files to be stored
+                            </li>
+                            <li class="list-group-item">
+                                Initiate the convert process using the <code>convert</code> button
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

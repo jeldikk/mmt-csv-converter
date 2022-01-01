@@ -1,0 +1,39 @@
+<div class="info">
+    <div class="alert alert-success">
+        Provided input file looks to be fine.
+    </div>
+
+    <div class="details">
+        <span class="font-weight-bold">Here are some details you may like</span>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="font-weight-bold">FileName :</span>
+                {{message.filename}}
+            </li>
+            <div class="row">
+                <div class="col-6">
+                    <li class="list-group-item">
+                        <span class="font-weight-bold">Total Scan Count :</span>
+                        {{message.scan_count}}
+                    </li>
+                    <li class="list-group-item">
+                        <span class="font-weight-bold">Beam Count : </span>
+                        {{message.beam_count}}
+                    </li>
+                </div>
+                <div class="col-6">
+                    <li class="list-group-item">
+                        <span class="font-weight-bold">First Scan :</span>
+                        {{message.timestamps.start}}
+                    </li>
+                    <li class="list-group-item">
+                        <span class="font-weight-bold">Last Scan :</span>
+                        {{message.timestamps.end}}
+                    </li>
+                </div>
+            </div>
+            
+            
+        </ul>
+    </div>
+</div>
