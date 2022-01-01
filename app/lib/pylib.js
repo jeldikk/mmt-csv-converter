@@ -52,7 +52,7 @@ var python_shell_1 = require("python-shell");
 var path = require("path");
 var PYTHON_OPTIONS = {
     pythonPath: path.resolve(__dirname, "./venv/Scripts/python"),
-    pythonOptions: ['-u'],
+    pythonOptions: ["-u"],
     scriptPath: path.resolve(__dirname, "./pyscripts"),
 };
 function validateMmtFile(filename) {
@@ -61,15 +61,15 @@ function validateMmtFile(filename) {
         return __generator(this, function (_a) {
             options = __assign(__assign({ mode: "json" }, PYTHON_OPTIONS), { args: ["-f", filename] });
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    var pythonShell = python_shell_1.PythonShell.run('retrieve_mmt_info.py', options, function (err) {
+                    var pythonShell = python_shell_1.PythonShell.run("retrieve_mmt_info.py", options, function (err) {
                         if (err)
                             reject(err);
                     });
-                    pythonShell.on('message', function (chunk) {
+                    pythonShell.on("message", function (chunk) {
                         resolve(chunk);
                     });
-                    pythonShell.on('close', function () {
-                        console.log('validation pythonShell is signing off');
+                    pythonShell.on("close", function () {
+                        console.log("validation pythonShell is signing off");
                     });
                 })];
         });
@@ -80,19 +80,18 @@ function convertMmtFile(ifilename, ofolder) {
     return __awaiter(this, void 0, void 0, function () {
         var options;
         return __generator(this, function (_a) {
-            options = __assign(__assign({ mode: 'json' }, PYTHON_OPTIONS), { args: ['-f', ifilename, '-o', ofolder] });
+            options = __assign(__assign({ mode: "json" }, PYTHON_OPTIONS), { args: ["-f", ifilename, "-o", ofolder] });
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    var pythonShell = python_shell_1.PythonShell.run('single_mmt.py', options, function (err) {
+                    var pythonShell = python_shell_1.PythonShell.run("single_mmt.py", options, function (err) {
                         if (err) {
                             reject(err);
                         }
                     });
-                    pythonShell.on('message', function (chunk) {
-                        console.log({ chunk: chunk });
+                    pythonShell.on("message", function (chunk) {
                         resolve(chunk);
                     });
-                    pythonShell.on('close', function () {
-                        console.log('creating pythonShell finished');
+                    pythonShell.on("close", function () {
+                        console.log("convert pythonShell finished");
                     });
                 })];
         });
