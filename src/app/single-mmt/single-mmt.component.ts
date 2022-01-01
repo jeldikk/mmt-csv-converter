@@ -135,4 +135,8 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
         console.error(err);
       });
   }
+
+  openGithub() {
+    this.electronService.openGithubCode();
+  }
 }
