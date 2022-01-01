@@ -16,7 +16,7 @@ export class OutputComponent implements OnInit, OnDestroy {
   data: any;
   type: "error" | "success" | "info" | "loading" | 'default' = "default"
 
-  constructor(private loadingService: LoadingService, private electronService: ElectronService) { }
+  constructor(private loadingService: LoadingService) { }
 
   ngOnInit(): void {
 
@@ -30,7 +30,6 @@ export class OutputComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      console.log("output component destroyed")
       this.loadingSubscription.unsubscribe();
   }
 
