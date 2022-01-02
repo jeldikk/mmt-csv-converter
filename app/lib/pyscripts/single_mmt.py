@@ -27,11 +27,20 @@ if not os.path.isfile(results.ipath):
     sys.stdout.write(json.dumps({
         "status": "error",
         "filename": results.ipath,
-        "messasge": "File Not Found"
+        "message": "File Not Found"
     }))
+    sys.exit(0)
 
-if not os.path.isdir(results.ofolder):
-    os.mkdir(results.ofolder)
+try:
+    if not os.path.isdir(results.ofolder):
+        os.mkdir(results.ofolder)
+except:
+    sys.stdout.write(json.dumps({
+        "status": "error",
+        "filename": results.ofolder,
+        "message": "Invalid Output Folder"
+    }))
+    sys.exit(0)
 
 mmtbucket = mmtwrapper(results.ipath, "rb")
 

@@ -65,6 +65,8 @@ export class ElectronService {
   }
 
   openGithubCode() {
-    this.shell.openExternal("https://github.com/jeldikk/mmt-csv-converter");
+    if (this.isElectron) {
+      this.shell.openExternal("https://github.com/jeldikk/mmt-csv-converter");
+    }
   }
 }
