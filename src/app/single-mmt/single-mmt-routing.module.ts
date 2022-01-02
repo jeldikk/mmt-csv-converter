@@ -5,7 +5,7 @@ import { SingleMmtComponent } from "./single-mmt.component";
 
 const routes: Routes = [
   {
-    path: "home",
+    path: "single-mmt",
     component: SingleMmtComponent,
   },
 ];

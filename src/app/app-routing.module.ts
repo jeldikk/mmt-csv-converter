@@ -7,7 +7,7 @@ import { SingleMmtRoutingModule } from "./single-mmt/single-mmt-routing.module";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "single-mmt",
     pathMatch: "full",
   },
   {

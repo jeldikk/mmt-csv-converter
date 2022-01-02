@@ -42,7 +42,7 @@ export async function convertMmtFile(ifilename, ofolder) {
   return new Promise((resolve, reject) => {
     let pythonShell = PythonShell.run("single_mmt.py", options, (err) => {
       if (err) {
-        reject(err);
+        reject(err.message);
       }
     });
 

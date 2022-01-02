@@ -84,7 +84,7 @@ function convertMmtFile(ifilename, ofolder) {
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     var pythonShell = python_shell_1.PythonShell.run("single_mmt.py", options, function (err) {
                         if (err) {
-                            reject(err);
+                            reject(err.message);
                         }
                     });
                     pythonShell.on("message", function (chunk) {

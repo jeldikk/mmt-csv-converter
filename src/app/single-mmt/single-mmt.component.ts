@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { ElectronService } from "../core/services";
 import { LoadingService } from "./loading.service";
 
@@ -11,7 +10,8 @@ import { LoadingService } from "./loading.service";
 })
 export class SingleMmtComponent implements OnInit, OnDestroy {
   inputForm: FormGroup;
-
+  interval: any;
+  updatedTime: Date;
   validationError = false;
 
   constructor(
@@ -26,18 +26,22 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
       mmtFilePath: new FormControl("", [Validators.required]),
       outputFolderPath: new FormControl("", [Validators.required]),
     });
+
+    this.interval = setInterval(() => {
+      this.updatedTime = new Date();
+    }, 1000);
   }
 
   ngOnDestroy(): void {
     // this.loadingSubscription.unsubscribe();
     console.log("home component destroyed");
+    clearInterval(this.interval);
   }
 
   convertFile() {
     const { mmtFilePath, outputFolderPath } = this.inputForm.value;
     this.loadingService.loading.next({
       isLoading: true,
-      startedBy: "convert",
       type: "loading",
       message: "converting .mmt to csv",
     });
@@ -50,7 +54,6 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
           this.validationError = true;
           this.loadingService.loading.next({
             isLoading: false,
-            startedBy: "convert",
             type: "error",
             message: response.message,
           });
@@ -58,11 +61,17 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
           this.validationError = false;
           this.loadingService.loading.next({
             isLoading: false,
-            startedBy: "convert",
             type: "success",
             message: response.message,
           });
         }
+      })
+      .catch((err) => {
+        this.loadingService.loading.next({
+          isLoading: false,
+          type: "error",
+          message: "naa thokka",
+        });
       });
   }
 
@@ -71,7 +80,6 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
 
     this.loadingService.loading.next({
       isLoading: true,
-      startedBy: "validate",
       type: "loading",
       message: "Validation and Retrieving Info from mmt file",
     });
@@ -84,7 +92,6 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
           this.validationError = true;
           this.loadingService.loading.next({
             isLoading: false,
-            startedBy: "validate",
             type: "error",
             message: response.message,
           });
@@ -92,7 +99,6 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
           this.validationError = false;
           this.loadingService.loading.next({
             isLoading: false,
-            startedBy: "validate",
             type: "info",
             message: response,
           });
@@ -101,7 +107,6 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
       .catch((_) => {
         this.loadingService.loading.next({
           isLoading: false,
-          startedBy: "validate",
           type: "error",
           message: "Error occured while validating input file",
         });
@@ -136,7 +141,8 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
       });
   }
 
-  openGithub() {
+  openGithub(event: Event) {
+    event.preventDefault();
     this.electronService.openGithubCode();
   }
 }
