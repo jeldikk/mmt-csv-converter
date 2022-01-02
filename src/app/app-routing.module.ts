@@ -1,26 +1,26 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './shared/components';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { PageNotFoundComponent } from "./shared/components";
 
-import { HomeRoutingModule } from './home/home-routing.module';
+import { SingleMmtRoutingModule } from "./single-mmt/single-mmt-routing.module";
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "single-mmt",
+    pathMatch: "full",
   },
   {
-    path: '**',
-    component: PageNotFoundComponent
-  }
+    path: "**",
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
-    HomeRoutingModule,
+    RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" }),
+    SingleMmtRoutingModule,
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

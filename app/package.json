@@ -1,5 +1,10 @@
 {
-  "name": "angular-electron",
+  "name": "mmt2csv",
+  "description": "mmt to csv file converter.",
+  "author":{
+    "name": "jeldikk",
+    "email": "jeldi.kamal2011@gmail.com"
+  },
   "version": "10.4.1",
   "main": "main.js",
   "private": true,
