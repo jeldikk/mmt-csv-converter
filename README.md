@@ -20,7 +20,20 @@ The generated .csv file are called L3 level data products with fields height, U,
 
 #### Credits
 
+
 The starter electron+angluar bootstrap is taken from [here](https://github.com/maximegris/angular-electron). Thanks to [maximegris](https://github.com/maximegris) for his wonderful work in bootstrap.
+
+
+#### release info
+
+1.0.0 - release20220102
+* can validate and inspect operation to get mmt file info
+* can convert mmt file csv file to an output folder
+* error handler with with responsive acknowledgement
+
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
