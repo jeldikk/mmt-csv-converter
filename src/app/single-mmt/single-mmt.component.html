@@ -23,6 +23,7 @@
     <app-output></app-output>
   </div>
   <div class="fixed-bottom bg-dark text-center text-light p-1 font-weight-bold">
-    App made with love for Anna - jeldikk : <a href='#' (click)="openGithub($event)">contribute</a>
+    <span class="time">{{updatedTime | date: 'mediumTime'}}</span> 
+    :: App made with love for Anna - jeldikk :: <a href='#' (click)="openGithub($event)">contribute</a>
   </div>
 </div>

@@ -10,7 +10,8 @@ import { LoadingService } from "./loading.service";
 })
 export class SingleMmtComponent implements OnInit, OnDestroy {
   inputForm: FormGroup;
-
+  interval: any;
+  updatedTime: Date;
   validationError = false;
 
   constructor(
@@ -25,11 +26,16 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
       mmtFilePath: new FormControl("", [Validators.required]),
       outputFolderPath: new FormControl("", [Validators.required]),
     });
+
+    this.interval = setInterval(() => {
+      this.updatedTime = new Date();
+    }, 1000);
   }
 
   ngOnDestroy(): void {
     // this.loadingSubscription.unsubscribe();
     console.log("home component destroyed");
+    clearInterval(this.interval);
   }
 
   convertFile() {
