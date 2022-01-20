@@ -69,4 +69,10 @@ export class ElectronService {
       this.shell.openExternal("https://github.com/jeldikk/mmt-csv-converter");
     }
   }
+
+  fetchApplicationLog() {
+    if (this.isElectron) {
+      return this.ipcRenderer.invoke("app-logs");
+    }
+  }
 }

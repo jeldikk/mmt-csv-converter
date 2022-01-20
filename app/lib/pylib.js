@@ -50,6 +50,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertMmtFile = exports.validateMmtFile = void 0;
 var python_shell_1 = require("python-shell");
 var path = require("path");
+var logger_1 = require("../logger");
 var PYTHON_OPTIONS = {
     pythonPath: path.resolve(__dirname, "./venv/Scripts/python"),
     pythonOptions: ["-u"],
@@ -62,13 +63,18 @@ function validateMmtFile(filename) {
             options = __assign(__assign({ mode: "json" }, PYTHON_OPTIONS), { args: ["-f", filename] });
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     var pythonShell = python_shell_1.PythonShell.run("retrieve_mmt_info.py", options, function (err) {
+                        console.log({ err: err });
+                        (0, logger_1.logError)("validate-pylib > error message: " + err);
                         if (err)
                             reject(err);
                     });
+                    (0, logger_1.logInfo)("validate-pylib > shell command: " + pythonShell.command);
                     pythonShell.on("message", function (chunk) {
+                        (0, logger_1.logInfo)("validate-pylib > " + chunk);
                         resolve(chunk);
                     });
                     pythonShell.on("close", function () {
+                        (0, logger_1.logInfo)("validation pythonShell is signing off");
                         console.log("validation pythonShell is signing off");
                     });
                 })];
@@ -84,13 +90,17 @@ function convertMmtFile(ifilename, ofolder) {
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     var pythonShell = python_shell_1.PythonShell.run("single_mmt.py", options, function (err) {
                         if (err) {
+                            (0, logger_1.logError)("convert-pylib > error message: " + err.message);
                             reject(err.message);
                         }
                     });
+                    (0, logger_1.logInfo)("convert-pylib > shell command: " + pythonShell.command);
                     pythonShell.on("message", function (chunk) {
+                        (0, logger_1.logInfo)("convert-pylib > message: " + chunk);
                         resolve(chunk);
                     });
                     pythonShell.on("close", function () {
+                        (0, logger_1.logInfo)("convert-pylib > convert pythonShell finished");
                         console.log("convert pythonShell finished");
                     });
                 })];

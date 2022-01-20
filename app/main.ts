@@ -4,6 +4,7 @@ import * as fs from "fs";
 import * as url from "url";
 import { convertMmtFile, validateMmtFile } from "./lib/pylib";
 import { mainMenu } from "./menu";
+import { logError, logInfo, logWarning } from "./logger";
 
 let mainWindow: BrowserWindow = null;
 
@@ -115,12 +116,49 @@ ipcMain.handle("open-dialog", async (event, { dialogType, dialogTitle }) => {
 
 //validate and retrieve file information from python
 ipcMain.handle("validate-file", async (event, { filename }) => {
+  logInfo(`validate-file > handle > filename: ${filename}`);
   const pythonOutput = await validateMmtFile(filename);
+  // log.info("sending response to validate-file channel");
+  logInfo(
+    `validate-file > handle > response: ${JSON.stringify(
+      pythonOutput,
+      null,
+      2
+    )}`
+  );
   return pythonOutput;
 });
 
 //convert .mmt file to csv files
 ipcMain.handle("convert-file", async (event, { ifilename, ofolder }) => {
+  logInfo(`convert-file > ifilename: ${ifilename}, ofolder: ${ofolder}`);
   const pythonOutput = await convertMmtFile(ifilename, ofolder);
+  logInfo(`convert-file > response: ${JSON.stringify(pythonOutput, null, 2)}`);
   return pythonOutput;
+});
+
+//get application logs
+ipcMain.handle("app-logs", async (event) => {
+  logInfo(`app-logs > getting system log`);
+  const logOutput = new Promise((resolve, reject) => {
+    fs.readFile(
+      path.resolve(app.getPath("appData"), "mmt-logs/main.log"),
+      "utf-8",
+      (err, data) => {
+        if (err) {
+          resolve({
+            status: "error",
+            message: "Eror while reading application logs",
+          });
+        } else {
+          resolve({
+            status: "success",
+            message: data,
+          });
+        }
+      }
+    );
+  });
+
+  return logOutput;
 });

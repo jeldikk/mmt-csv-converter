@@ -19,7 +19,7 @@ if not os.path.isfile(results.ipath):
         "filename": results.ipath,
         "message": "File Not Found"
     }))
-    sys.exit(1001)
+    # sys.exit(1001)
 
 
 mmtbucket = mmtwrapper(results.ipath, "rb")
@@ -33,4 +33,3 @@ sys.stdout.write(json.dumps({
         "end": str(mmtbucket.getScanCycle(mmtbucket.totscans).timestamp)
     }
 }))
-sys.exit(0)
