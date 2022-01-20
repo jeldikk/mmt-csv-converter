@@ -1,7 +1,7 @@
 {
   "name": "mmt2csv",
   "description": "mmt to csv file converter.",
-  "author":{
+  "author": {
     "name": "jeldikk",
     "email": "jeldi.kamal2011@gmail.com"
   },
@@ -10,6 +10,7 @@
   "private": true,
   "dependencies": {
     "@types/python-shell": "^1.0.3",
+    "electron-log": "^4.4.4",
     "python-shell": "^3.0.1"
   }
 }

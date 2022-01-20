@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { ElectronService } from "../core/services";
 import { LoadingService } from "./loading.service";
 
@@ -16,7 +17,8 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
 
   constructor(
     private loadingService: LoadingService,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -144,5 +146,9 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
   openGithub(event: Event) {
     event.preventDefault();
     this.electronService.openGithubCode();
+  }
+
+  showLogs() {
+    this.router.navigate(["logs"]);
   }
 }

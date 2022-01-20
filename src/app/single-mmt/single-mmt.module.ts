@@ -9,6 +9,7 @@ import { OutputComponent } from "./output/output.component";
 import { InfoComponent } from "./output/info/info.component";
 import { ErrorComponent } from "./output/error/error.component";
 import { SuccessComponent } from "./output/success/success.component";
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SuccessComponent } from "./output/success/success.component";
     InfoComponent,
     ErrorComponent,
     SuccessComponent,
+    LogsComponent,
   ],
   imports: [
     CommonModule,
