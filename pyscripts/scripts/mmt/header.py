@@ -48,10 +48,6 @@ class mmtheader(object):
                 minute=self.min,
                 second=self.sec,
             )
-            # print('after timestamp')
-        # print(kwargs)
-        # print('self.header',self._header)
-        # print('beam Angles are ',self.beamAngles)
         self.hoffset = self.w1start * 0.15
         # This is the frequency window
         self.fd = 1 / (self.nci * self.ipp * 1e-6)
@@ -71,7 +67,6 @@ class mmtheader(object):
         self.framesize = self.datasize + 128
         self.scansize = self.framesize * self.nbeams
 
-        # print('I am in mmtheader at last')
 
     @property
     def head(self):
