@@ -51,6 +51,7 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
     this.electronService
       .convertFile(mmtFilePath, outputFolderPath)
       .then((response) => {
+        response = JSON.parse(response);
         const { status } = response;
         if (status === "error") {
           this.validationError = true;
@@ -89,6 +90,7 @@ export class SingleMmtComponent implements OnInit, OnDestroy {
     this.electronService
       .validateFile(mmtFilePath)
       .then((response) => {
+        response = JSON.parse(response);
         const { status } = response;
         if (status === "error") {
           this.validationError = true;

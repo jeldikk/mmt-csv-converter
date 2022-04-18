@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertMmtFile = exports.validateMmtFile = void 0;
-var python_shell_1 = require("python-shell");
+var child_process_1 = require("child_process");
 var path = require("path");
 var logger_1 = require("../logger");
 var PYTHON_OPTIONS = {
@@ -56,27 +45,48 @@ var PYTHON_OPTIONS = {
     pythonOptions: ["-u"],
     scriptPath: path.resolve(__dirname, "./pyscripts"),
 };
+var validateExe = path.resolve(__dirname, "./bin/retrieve_mmt_info.exe");
+var convertExe = path.resolve(__dirname, "./bin/single_mmt.exe");
 function validateMmtFile(filename) {
     return __awaiter(this, void 0, void 0, function () {
-        var options;
+        var exePath;
         return __generator(this, function (_a) {
-            options = __assign(__assign({ mode: "json" }, PYTHON_OPTIONS), { args: ["-f", filename] });
+            // const options: Options = {
+            //   mode: "json",
+            //   ...PYTHON_OPTIONS,
+            //   args: ["-f", filename],
+            // };
+            console.log("validateMmtFile is called");
+            exePath = path.resolve(__dirname, "./bin/retrieve_mmt_info.exe");
+            console.log({ exePath: exePath });
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    var pythonShell = python_shell_1.PythonShell.run("retrieve_mmt_info.py", options, function (err) {
-                        console.log({ err: err });
-                        (0, logger_1.logError)("validate-pylib > error message: " + err);
-                        if (err)
-                            reject(err);
+                    // let pythonShell = PythonShell.run(
+                    //   "retrieve_mmt_info.py",
+                    //   options,
+                    //   (err) => {
+                    //     logError(`validate-pylib > error message: ${err}`);
+                    //     if (err) reject(err);
+                    //   }
+                    // );
+                    var validateExec = (0, child_process_1.spawn)(exePath, ["-f", filename]);
+                    validateExec.stdout.on("data", function (data) {
+                        (0, logger_1.logInfo)("validate-exe > " + data);
+                        resolve(data);
                     });
-                    (0, logger_1.logInfo)("validate-pylib > shell command: " + pythonShell.command);
-                    pythonShell.on("message", function (chunk) {
-                        (0, logger_1.logInfo)("validate-pylib > " + chunk);
-                        resolve(chunk);
+                    validateExec.stderr.on("data", function (data) {
+                        reject(data);
                     });
-                    pythonShell.on("close", function () {
-                        (0, logger_1.logInfo)("validation pythonShell is signing off");
-                        console.log("validation pythonShell is signing off");
+                    validateExec.on("close", function () {
+                        (0, logger_1.logInfo)("validation exe is signing off");
                     });
+                    // logInfo(`validate-pylib > shell command: ${pythonShell.command}`);
+                    // pythonShell.on("message", (chunk) => {
+                    //   logInfo(`validate-pylib > ${chunk}`);
+                    //   resolve(chunk);
+                    // });
+                    // pythonShell.on("close", () => {
+                    //   logInfo("validation pythonShell is signing off");
+                    // });
                 })];
         });
     });
@@ -84,25 +94,38 @@ function validateMmtFile(filename) {
 exports.validateMmtFile = validateMmtFile;
 function convertMmtFile(ifilename, ofolder) {
     return __awaiter(this, void 0, void 0, function () {
-        var options;
         return __generator(this, function (_a) {
-            options = __assign(__assign({ mode: "json" }, PYTHON_OPTIONS), { args: ["-f", ifilename, "-o", ofolder] });
+            // const options: Options = {
+            //   mode: "json",
+            //   ...PYTHON_OPTIONS,
+            //   args: ["-f", ifilename, "-o", ofolder],
+            // };
             return [2 /*return*/, new Promise(function (resolve, reject) {
-                    var pythonShell = python_shell_1.PythonShell.run("single_mmt.py", options, function (err) {
-                        if (err) {
-                            (0, logger_1.logError)("convert-pylib > error message: " + err.message);
-                            reject(err.message);
-                        }
+                    // let pythonShell = PythonShell.run("single_mmt.py", options, (err) => {
+                    //   if (err) {
+                    //     logError(`convert-pylib > error message: ${err.message}`);
+                    //     reject(err.message);
+                    //   }
+                    // });
+                    var convertProcess = (0, child_process_1.spawn)(convertExe, ["-f", ifilename, "-o", ofolder]);
+                    // logInfo(`convert-pylib > shell command: ${pythonShell.command}`);
+                    convertProcess.stdout.on("data", function (data) {
+                        (0, logger_1.logInfo)("convert-pylib > message: " + data);
+                        resolve(data);
                     });
-                    (0, logger_1.logInfo)("convert-pylib > shell command: " + pythonShell.command);
-                    pythonShell.on("message", function (chunk) {
-                        (0, logger_1.logInfo)("convert-pylib > message: " + chunk);
-                        resolve(chunk);
+                    convertProcess.stderr.on("data", function (err) {
+                        (0, logger_1.logInfo)("convert-pylib > error: " + err);
+                        reject(err);
                     });
-                    pythonShell.on("close", function () {
-                        (0, logger_1.logInfo)("convert-pylib > convert pythonShell finished");
-                        console.log("convert pythonShell finished");
+                    convertProcess.on("close", function () {
+                        (0, logger_1.logInfo)("convert-pylib is finished");
                     });
+                    // pythonShell.on("message", (chunk) => {
+                    //   resolve(chunk);
+                    // });
+                    // pythonShell.on("close", () => {
+                    //   logInfo(`convert-pylib > convert pythonShell finished`);
+                    // });
                 })];
         });
     });

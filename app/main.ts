@@ -51,7 +51,6 @@ function createWindow(): BrowserWindow {
       // Path when running electron in local folder
       pathIndex = "../dist/index.html";
     }
-
     mainWindow.loadURL(
       url.format({
         pathname: path.join(__dirname, pathIndex),
@@ -126,7 +125,7 @@ ipcMain.handle("validate-file", async (event, { filename }) => {
       2
     )}`
   );
-  return pythonOutput;
+  return pythonOutput.toString();
 });
 
 //convert .mmt file to csv files
@@ -134,7 +133,7 @@ ipcMain.handle("convert-file", async (event, { ifilename, ofolder }) => {
   logInfo(`convert-file > ifilename: ${ifilename}, ofolder: ${ofolder}`);
   const pythonOutput = await convertMmtFile(ifilename, ofolder);
   logInfo(`convert-file > response: ${JSON.stringify(pythonOutput, null, 2)}`);
-  return pythonOutput;
+  return pythonOutput.toString();
 });
 
 //get application logs
