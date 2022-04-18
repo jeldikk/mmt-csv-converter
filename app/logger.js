@@ -4,7 +4,7 @@ exports.logWarning = exports.logError = exports.logInfo = void 0;
 var electron_1 = require("electron");
 var electron_log_1 = require("electron-log");
 var path = require("path/posix");
-electron_log_1.default.transports.console.format = "{h}:{i}:{s} > {text}";
+electron_log_1.default.transports.console.format = "{h}:{i}:{s} :: {text}";
 electron_log_1.default.transports.file.resolvePath = function () {
     return path.join(electron_1.app.getPath("appData"), "mmt-logs/main.log");
 };

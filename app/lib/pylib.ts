@@ -1,66 +1,45 @@
-import { PythonShell, Options } from "python-shell";
+import { spawn } from "child_process";
 import * as path from "path";
 import { logError, logInfo } from "../logger";
 
-const PYTHON_OPTIONS = {
-  pythonPath: path.resolve(__dirname, "./venv/Scripts/python"),
-  pythonOptions: ["-u"],
-  scriptPath: path.resolve(__dirname, "./pyscripts"),
-};
+const validateExe = path.resolve(__dirname, "./bin/retrieve_mmt_info.exe");
+const convertExe = path.resolve(__dirname, "./bin/single_mmt.exe");
 
 export async function validateMmtFile(filename: string): Promise<any> {
-  const options: Options = {
-    mode: "json",
-    ...PYTHON_OPTIONS,
-    args: ["-f", filename],
-  };
   return new Promise((resolve, reject) => {
-    let pythonShell = PythonShell.run(
-      "retrieve_mmt_info.py",
-      options,
-      (err) => {
-        logError(`validate-pylib > error message: ${err}`);
-        if (err) reject(err);
-      }
-    );
+    const validateExec = spawn(validateExe, ["-f", filename]);
 
-    logInfo(`validate-pylib > shell command: ${pythonShell.command}`);
-
-    pythonShell.on("message", (chunk) => {
-      logInfo(`validate-pylib > ${chunk}`);
-      resolve(chunk);
+    validateExec.stdout.on("data", (data) => {
+      logInfo(`validate-exe > ${data}`);
+      resolve(data);
     });
 
-    pythonShell.on("close", () => {
-      logInfo("validation pythonShell is signing off");
+    validateExec.stderr.on("data", (data) => {
+      reject(data);
+    });
+
+    validateExec.on("close", () => {
+      logInfo("validation exe is signing off");
     });
   });
 }
 
 export async function convertMmtFile(ifilename, ofolder) {
-  const options: Options = {
-    mode: "json",
-    ...PYTHON_OPTIONS,
-    args: ["-f", ifilename, "-o", ofolder],
-  };
-
   return new Promise((resolve, reject) => {
-    let pythonShell = PythonShell.run("single_mmt.py", options, (err) => {
-      if (err) {
-        logError(`convert-pylib > error message: ${err.message}`);
-        reject(err.message);
-      }
+    const convertProcess = spawn(convertExe, ["-f", ifilename, "-o", ofolder]);
+
+    convertProcess.stdout.on("data", (data) => {
+      logInfo(`convert-pylib > message: ${data}`);
+      resolve(data);
     });
 
-    logInfo(`convert-pylib > shell command: ${pythonShell.command}`);
-
-    pythonShell.on("message", (chunk) => {
-      logInfo(`convert-pylib > message: ${chunk}`);
-      resolve(chunk);
+    convertProcess.stderr.on("data", (err) => {
+      logInfo(`convert-pylib > error: ${err}`);
+      reject(err);
     });
 
-    pythonShell.on("close", () => {
-      logInfo(`convert-pylib > convert pythonShell finished`);
+    convertProcess.on("close", () => {
+      logInfo("convert-pylib is finished");
     });
   });
 }
