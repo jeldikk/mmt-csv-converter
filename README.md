@@ -35,9 +35,7 @@ The starter electron+angluar bootstrap is taken from [here](https://github.com/m
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
+
 
 > _**If you are a python/nodejs developer, you can scroll futher.**_ :)
 
@@ -47,9 +45,18 @@ The starter electron+angluar bootstrap is taken from [here](https://github.com/m
 make sure virtualenv is installed to generate python environment folder `venv` and install python `numpy` module.
 
 ```sh
-$ virtualenv ./app/lib/venv
+$ virtualenv ./pyscripts/venv
 $ activate
-(venv)$ pip install numpy
+(venv)$ pip install cx-Freeze
+```
+
+#### building python scripts to exe files
+```sh
+#Navigate to pyscripts folder and activate python environment
+$ .\venv\Scripts\activate
+
+#later execute the build command
+$ python setup.py build
 ```
 
 #### setting node environment

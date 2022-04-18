@@ -14,30 +14,27 @@
     {
       "from": "dist",
       "to": "app",
-      "filter": [
-        "**/*"
-      ]
+      "filter": ["**/*"]
+    },
+    {
+      "from": "pyscripts/build/exe.win-amd64-3.8",
+      "to": "app/lib/bin",
+      "filter": ["**/*"]
     }
   ],
   "win": {
     "icon": "dist/assets/icons",
-    "target": [
-      "portable"
-    ]
+    "target": ["nsis"]
   },
   "portable": {
     "splashImage": "dist/assets/icons/electron.bmp"
   },
   "mac": {
     "icon": "dist/assets/icons",
-    "target": [
-      "dmg"
-    ]
+    "target": ["dmg"]
   },
   "linux": {
     "icon": "dist/assets/icons",
-    "target": [
-      "AppImage"
-    ]
+    "target": ["AppImage"]
   }
 }
